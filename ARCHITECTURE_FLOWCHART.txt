@@ -1,0 +1,189 @@
+╔════════════════════════════════════════════════════════════════════════════════════════╗
+║                    ZEDICUS v3 — ARCHITECTURE COMPLÈTE                                 ║
+╚════════════════════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│                                                                                         │
+│                            👤 UTILISATEUR FINAL                                       │
+│                                                                                         │
+└─────────────────────────────────┬───────────────────────────────────────────────────────┘
+                                  │
+                    ┌─────────────▼──────────────┐
+                    │   STREAMLIT INTERFACE      │
+                    │  (zedicus_v3.py)          │
+                    ├────────────────────────────┤
+                    │ 📊 Dashboard               │
+                    │ 🎯 Trading Signals         │
+                    │ 📈 Technical Analysis      │
+                    │ 📰 News & Market           │
+                    │ 📂 Repository Info         │
+                    │ ⚙️ Settings                │
+                    └────────────────┬───────────┘
+                                     │
+        ┌────────────────────────────┼────────────────────────────┐
+        │                            │                            │
+┌───────▼────────────┐   ┌──────────▼──────────┐   ┌────────────▼──────────┐
+│  ORCHESTRATOR      │   │  DATA PIPELINE      │   │  HEALTH CHECKER       │
+│ (Integration)      │   │  (Workflow)         │   │  (Monitoring)         │
+├────────────────────┤   ├─────────────────────┤   ├───────────────────────┤
+│ • Registry         │   │ • Step sequencing   │   │ • Module compatibility│
+│ • Module loader    │   │ • Data mapping      │   │ • Data integrity      │
+│ • Shared data      │   │ • Error handling    │   │ • Health report       │
+│ • Config mgmt      │   │ • Logging           │   │ • Alerts              │
+└────────┬───────────┘   └─────────┬───────────┘   └───────────┬───────────┘
+         │                        │                            │
+         └────────────────────────┼────────────────────────────┘
+                                  │
+        ┌─────────────────────────┼─────────────────────────┐
+        │                         │                         │
+┌───────▼──────────────┐  ┌──────▼──────────┐  ┌─────────▼──────────────┐
+│ TECHNICAL ANALYZER   │  │ NEWS ANALYZER   │  │ TRADING SIGNAL GEN.    │
+│                      │  │                 │  │                        │
+├──────────────────────┤  ├─────────────────┤  ├────────────────────────┤
+│ Data Fetch:          │  │ Feeds:          │  │ Entry Points:          │
+│ ✓ OHLC data         │  │ ✓ BCE RSS       │  │ ✓ Support Levels       │
+│ ✓ 90-day history    │  │ ✓ Investing.com │  │ ✓ Pivot                │
+│                      │  │                 │  │ ✓ RSI zones            │
+│ Patterns:            │  │ Sentiment:      │  │                        │
+│ ✓ Doji              │  │ ✓ Text analysis │  │ Exit Points:           │
+│ ✓ Hammer            │  │ ✓ -1 à +1 score│  │ ✓ Resistance levels    │
+│ ✓ Evening Star      │  │                 │  │ ✓ TP1 / TP2            │
+│ ✓ Engulfing         │  │ Impact:         │  │ ✓ Stop Loss            │
+│                      │  │ ✓ Category      │  │                        │
+│ Indicators:          │  │ ✓ Relevance     │  │ Signal:                │
+│ ✓ RSI(14)           │  │ ✓ Score         │  │ ✓ ACHAT / VENTE /      │
+│ ✓ MACD(12,26,9)    │  │                 │  │   ATTENDRE             │
+│ ✓ BB(20,2)          │  │                 │  │ ✓ Risk/Reward          │
+│                      │  │                 │  │ ✓ Confiance (%)        │
+│ Support & Resist:    │  │                 │  │                        │
+│ ✓ Pivot             │  │                 │  │ Voting System:         │
+│ ✓ S1/S2             │  │                 │  │ ✓ 4+ sources           │
+│ ✓ R1/R2             │  │                 │  │ ✓ Weighted score       │
+│ ✓ ATR-adjusted      │  │                 │  │                        │
+└────┬─────────────────┘  └────┬────────────┘  └──────────┬─────────────┘
+     │                         │                          │
+     └─────────────────────────┼──────────────────────────┘
+                               │
+        ┌──────────────────────▼──────────────────────┐
+        │         CACHE MANAGER                       │
+        ├───────────────────────────────────────────┤
+        │ ┌──────────────┐      ┌─────────────────┐ │
+        │ │ MEMORY CACHE │ ◄──► │   DISK CACHE    │ │
+        │ │ (Fast/TTL)   │      │ (Persistent)    │ │
+        │ └──────────────┘      └─────────────────┘ │
+        │                                           │
+        │ Features:                                 │
+        │ ✓ Auto-TTL eviction                       │
+        │ ✓ Multi-level fallback                    │
+        │ ✓ Pattern-based clear                     │
+        │ ✓ Integrity checking                      │
+        └──────────────┬──────────────────────────┘
+                       │
+        ┌──────────────▼──────────────┐
+        │     FILE SYSTEM              │
+        ├──────────────────────────────┤
+        │ ┌─────────────────────────┐  │
+        │ │ .cache_zedicus/         │  │
+        │ │  ├─ hash1.pkl           │  │
+        │ │  ├─ hash2.pkl           │  │
+        │ │  └─ ...                 │  │
+        │ ├─ zedicus.log            │  │
+        │ ├─ zedicus_config.json    │  │
+        │ └─ repo_report.json       │  │
+        └──────────────┬─────────────┘
+                       │
+        ┌──────────────▼──────────────────────┐
+        │      EXTERNAL DATA SOURCES           │
+        ├──────────────────────────────────────┤
+        │ • yfinance (OHLC)                    │
+        │ • ECB RSS feeds                      │
+        │ • Investing.com feeds                │
+        │ • Optional: API Brokers              │
+        └──────────────────────────────────────┘
+
+
+════════════════════════════════════════════════════════════════════════════════════════
+
+                            🔄 FLUX DE DONNÉES
+
+1. INPUT PHASE
+   └─► Utilisateur lance streamlit run zedicus_v3.py
+       └─► Streamlit initialise la page
+           └─► TechnicalAnalyzer.fetch_data() via yfinance
+
+2. ANALYSIS PHASE
+   └─► Parallel Analysis:
+       ├─► TechnicalAnalyzer:
+       │   └─► identify_candle_patterns()
+       │   └─► calculate_support_resistance()
+       │   └─► calculate_indicators()
+       │
+       └─► NewsAnalyzer:
+           └─► fetch_bce_news()
+           └─► analyze_sentiment()
+           └─► classify_news_impact()
+
+3. DECISION PHASE
+   └─► TradingSignalGenerator:
+       └─► generate_entry_points()
+       └─► generate_exit_points()
+       └─► generate_trade_signal() [VOTING]
+           └─► Composite score from all modules
+           └─► Final action: BUY/SELL/WAIT
+
+4. CACHING PHASE
+   └─► Cache results for fast retrieval
+       └─► Memory cache (TTL: 1h)
+       └─► Disk cache (Persistent)
+
+5. OUTPUT PHASE
+   └─► Streamlit renders:
+       ├─► Metrics
+       ├─► Charts
+       ├─► Recommendations
+       └─► News impact
+
+
+════════════════════════════════════════════════════════════════════════════════════════
+
+                        📊 SIGNAL GENERATION VOTING
+
+┌──────────────┐
+│   Pattern    │  Doji=0.6, Hammer=0.8, Engulfing=0.9
+│   Detection  │  ▼ Average: 0.77
+└───────┬──────┘
+
+┌──────────────┐
+│    RSI       │  RSI=25 (Oversold) = 0.7 vote for BUY
+│  Indicator   │  ▼
+└───────┬──────┘
+
+┌──────────────┐
+│    MACD      │  Histogram=+0.0005 (Bullish) = 0.5 vote for BUY
+│  Indicator   │  ▼
+└───────┬──────┘
+
+┌──────────────┐
+│   Support/   │  Price near S1 = 0.8 vote for BUY
+│ Resistance   │  ▼
+└───────┬──────┘
+
+┌──────────────┐
+│     News     │  Impact=+45 (Positive) = 0.45 vote for BUY
+│   Sentiment  │  ▼
+└───────┬──────┘
+
+                    COMBINED VOTE
+        ┌──────────────────────────────────┐
+        │  BUY: 3.47/5 = 69.4% confidence  │
+        │  SELL: 0.53/5                    │
+        │  WAIT: 0.0/5                     │
+        └────────────────┬─────────────────┘
+                         │
+                 ┌───────▼────────┐
+                 │ ACTION: ACHETER│
+                 │ CONFIANCE: 69% │
+                 └────────────────┘
+
+
+════════════════════════════════════════════════════════════════════════════════════════

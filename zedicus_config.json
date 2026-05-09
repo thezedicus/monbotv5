@@ -1,0 +1,100 @@
+{
+  "app_name": "ZEDICUS v3 — Advanced Trader Bot",
+  "version": "3.0",
+  "description": "Dashboard BCE avec analyse technique, news, et trading signals",
+  
+  "trading": {
+    "ticker": "EURUSD=X",
+    "lookback_days": 90,
+    "risk_per_trade": 2.0,
+    "target_rrr": 2.5,
+    "min_confidence": 70.0,
+    "position_size_method": "fixed_percent"
+  },
+  
+  "technical_analysis": {
+    "rsi_period": 14,
+    "rsi_overbought": 70,
+    "rsi_oversold": 30,
+    "macd_fast": 12,
+    "macd_slow": 26,
+    "macd_signal": 9,
+    "bb_period": 20,
+    "bb_std_dev": 2,
+    "atr_period": 14,
+    "support_resistance_lookback": 50
+  },
+  
+  "patterns": {
+    "doji_threshold": 0.1,
+    "hammer_threshold": 0.15,
+    "engulfing_threshold": 0.8,
+    "morning_star_gap": 0.5,
+    "evening_star_gap": 0.5
+  },
+  
+  "news": {
+    "enabled": true,
+    "feeds": [
+      "https://www.ecb.europa.eu/rss/news.en.html",
+      "https://www.investing.com/rss/news_85.rss"
+    ],
+    "max_articles": 10,
+    "sentiment_threshold": 0.3,
+    "refresh_interval_minutes": 30
+  },
+  
+  "cache": {
+    "enabled": true,
+    "memory_cache_size_mb": 100,
+    "disk_cache_enabled": true,
+    "ttl_seconds": 3600,
+    "cache_dir": ".cache_zedicus"
+  },
+  
+  "modules": {
+    "technical_analysis": true,
+    "news_analysis": true,
+    "trading_signals": true,
+    "cache_management": true,
+    "repo_integration": true
+  },
+  
+  "ui": {
+    "theme": "dark",
+    "layout": "wide",
+    "update_interval_seconds": 60,
+    "charts_height": 600,
+    "candlestick_enabled": true,
+    "volume_chart_enabled": true
+  },
+  
+  "notifications": {
+    "enabled": false,
+    "telegram_enabled": false,
+    "discord_enabled": false,
+    "email_enabled": false
+  },
+  
+  "logging": {
+    "level": "INFO",
+    "file_enabled": true,
+    "log_file": "zedicus.log",
+    "max_log_size_mb": 10,
+    "backup_count": 5
+  },
+  
+  "performance": {
+    "max_workers": 4,
+    "timeout_seconds": 30,
+    "cache_preload": true,
+    "lazy_load_modules": false
+  },
+  
+  "data": {
+    "data_source": "yfinance",
+    "frequency": "1d",
+    "auto_update": true,
+    "update_time": "17:00"
+  }
+}
